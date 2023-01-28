@@ -21,3 +21,31 @@ form.appendChild(input);
 form.appendChild(button);
 
 div.appendChild(form);
+
+/* COMMUNICATION WITH POKEAPI */
+
+const endpoint = `https://pokeapi.co/api/v2/pokemon/`;
+
+const getElementForm = (element) => {
+	return document.querySelector(element);
+};
+
+const searchInput = getElementForm(".search-input");
+const searchButton = getElementForm(".search-button");
+
+let pokemonName, pokemonResult;
+
+const requestPokemon = (endpoint, pokemon) => {
+	fetch(`${endpoint}${pokemon}`)
+		.then((result) => {
+			return result.json();
+		})
+		.then((data) => {
+			pokemonResult = data;
+			console.log(pokemonResult);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+requestPokemon(endpoint, "charmander");
