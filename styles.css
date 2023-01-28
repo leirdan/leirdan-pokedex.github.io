@@ -1,0 +1,13 @@
+:root {
+    --bg-color: #d3fcf4;
+    --font-primary: monospace;
+}
+
+body {
+    background-color: var(--bg-color);
+}
+
+h3 {
+    text-align: center;
+    font-family: var(--font-primary);
+}
