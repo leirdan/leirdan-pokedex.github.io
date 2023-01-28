@@ -1,13 +1,33 @@
 :root {
-    --bg-color: #d3fcf4;
+    --primary-color: #d3fcf4;
     --font-primary: monospace;
+    --secondary-color: #D44AA8;
 }
 
 body {
-    background-color: var(--bg-color);
+    background-color: var(--primary-color);
 }
 
 h3 {
     text-align: center;
     font-family: var(--font-primary);
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    border-radius: 5px;
+}
+
+.search-button {
+    background-color:var(--secondary-color);
+    margin-top: 10px;
+    border-radius: 5px;
+    border-style:solid;
 }
