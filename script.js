@@ -1,6 +1,6 @@
 const div = document.getElementById("root");
 const title = document.createElement("h3");
-title.textContent = `welcome to the virtual pokedex!`;
+title.textContent = `Welcome to the virtual Pokedex!`;
 div.appendChild(title);
 
 /* HTML FORM */
@@ -15,7 +15,6 @@ input.className = "search-input";
 const button = document.createElement("button");
 button.textContent = `Search your pokemon!`;
 button.className = "search-button";
-button.onclick = "";
 
 form.appendChild(input);
 form.appendChild(button);
@@ -35,6 +34,12 @@ const searchButton = getElementForm(".search-button");
 
 let pokemonName, pokemonResult;
 
+searchButton.addEventListener("click", (event) => {
+	event.preventDefault();
+	pokemonName = searchInput.value.toLowerCase();
+	requestPokemon(endpoint, pokemonName);
+});
+
 const requestPokemon = (endpoint, pokemon) => {
 	fetch(`${endpoint}${pokemon}`)
 		.then((result) => {
@@ -48,4 +53,3 @@ const requestPokemon = (endpoint, pokemon) => {
 			console.log(err);
 		});
 };
-requestPokemon(endpoint, "charmander");
