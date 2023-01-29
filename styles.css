@@ -13,6 +13,12 @@ h3 {
     font-family: var(--font-primary);
 }
 
+.container {
+    height: 2rem;
+    margin: 0 auto;
+    padding-top: 1rem;
+}
+
 .search-form {
     display: flex;
     justify-content: center;
@@ -23,6 +29,8 @@ h3 {
 
 .search-input {
     border-radius: 5px;
+    background-color: black;
+    color: white;
 }
 
 .search-button {
@@ -30,4 +38,5 @@ h3 {
     margin-top: 10px;
     border-radius: 5px;
     border-style:solid;
+    font-weight: bold;
 }
