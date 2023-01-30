@@ -29,7 +29,7 @@ let text;
 
 /* COMMUNICATION WITH POKEAPI */
 
-const endpoint = `https://pokeapi.co/api/v2/pokemon/`;
+const endpoint = `https://pokeapi.co/api/v2/pokemon?limit=151`;
 
 const getElementForm = (element) => {
 	return document.querySelector(element);
@@ -43,12 +43,27 @@ let pokemonName, pokemonResult;
 
 /******** FUNCTIONS *********/
 
+async function fetchAllPokemon() {
+	fetch(endpoint)
+		.then((pokemons) => {
+			return pokemons.json();
+		})
+		.then((allPokemons) => {
+			allPokemons.results.forEach((element) => {
+				requestPokemon(element);
+			});
+		});
+}
+
+fetchAllPokemon();
+
 // 1. the function below is the one that make the request in pokeApi and return an error or the pokemon data!
-async function requestPokemon(endpoint, pokemon) {
-	const requestResult = await fetch(`${endpoint}${pokemon}`);
+async function requestPokemon(pokemon) {
+	const requestResult = await fetch(pokemon.url);
 	if (requestResult.status === 200) {
 		const data = await requestResult.json();
 		pokemonResult = data;
+		console.log(pokemonResult);
 		return pokemonResult;
 	} else {
 		text = document.createTextNode(`insert a pokemon that exists!`);
