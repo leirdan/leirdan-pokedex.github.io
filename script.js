@@ -47,6 +47,9 @@ const getElementForm = (element) => {
 // here, we get the elements from html.
 const searchInput = getElementForm(".search-input");
 const searchButton = getElementForm(".search-button");
+const backButton = document.createElement("button");
+backButton.textContent = `Voltar ao início`;
+backButton.className = "back-button";
 
 let pokemonName, pokemonResult;
 
@@ -86,6 +89,8 @@ async function getOnePokemon(pokemon) {
 	const res = await fetch(url);
 	if (res.status === 200) {
 		const pokemon = await res.json();
+		form.removeChild(button);
+		form.appendChild(backButton);
 		createCard(pokemon);
 	} else {
 		text = `um erro ocorreu. insira o nome correto dessa vez.`;
@@ -131,4 +136,13 @@ searchButton.addEventListener("click", async (event) => {
 	} catch (err) {
 		divError.innerHTML = err;
 	}
+});
+
+backButton.addEventListener("click", (event) => {
+	event.preventDefault();
+	div.innerHTML = "";
+	searchInput.value = "";
+	form.removeChild(backButton);
+	form.appendChild(button);
+	fetchAllPokemon();
 });
