@@ -12,6 +12,7 @@ body {
     background: linear-gradient(to right, var(--left-color)
     , var(--right-color));
     font-family: var(--font-primary);
+    color: white;
 }
 
 h1 {
@@ -32,6 +33,10 @@ h1 {
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.search-label {
+    margin-bottom: 10px;
 }
 
 .search-input {
@@ -66,4 +71,8 @@ button {
 
 .search-button:hover {
     background-position: 0;
+}
+
+.result-div {
+    text-align: center;
 }

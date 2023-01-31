@@ -10,6 +10,10 @@ divForm.appendChild(title);
 const form = document.createElement("form");
 form.className = "search-form";
 
+const label = document.createElement("label");
+label.textContent = `Filter a pokemon.`;
+label.className = "search-label";
+
 const input = document.createElement("input");
 input.type = "text";
 input.className = "search-input";
@@ -18,6 +22,7 @@ const button = document.createElement("button");
 button.textContent = `Search your pokemon!`;
 button.className = "search-button";
 
+form.appendChild(label);
 form.appendChild(input);
 form.appendChild(button);
 
@@ -90,6 +95,7 @@ async function getOnePokemon(pokemon) {
 async function createCard(pokemon) {
 	const pokeName = `${pokemon.name}`;
 	const divResult = document.createElement("div");
+	divResult.className = "result-div";
 	divResult.classList.add("pokemon");
 	divResult.innerHTML = pokeName;
 	div.appendChild(divResult);
