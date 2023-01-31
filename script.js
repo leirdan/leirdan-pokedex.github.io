@@ -1,6 +1,6 @@
 const div = document.getElementById("root");
 const title = document.createElement("h1");
-title.textContent = `WELCOME TO THE VIRTUAL POKEDEX!`;
+title.textContent = `BEM VINDO À POKEDEX VIRTUAL!`;
 
 /* HTML FORM */
 
@@ -11,7 +11,7 @@ const form = document.createElement("form");
 form.className = "search-form";
 
 const label = document.createElement("label");
-label.textContent = `Filter a pokemon.`;
+label.textContent = `Pesquise por um pokémon.`;
 label.className = "search-label";
 
 const input = document.createElement("input");
@@ -20,7 +20,7 @@ input.className = "search-input";
 input.placeholder = "ex.: wartortle.";
 
 const button = document.createElement("button");
-button.textContent = `Search your pokemon!`;
+button.textContent = `Procure seu pokémon!`;
 button.className = "search-button";
 
 form.appendChild(label);
@@ -73,7 +73,7 @@ async function requestPokemon(pokemon) {
 		const pokemon = await res.json();
 		createCard(pokemon);
 	} else {
-		text = `an error occurred!`;
+		text = `um erro ocorreu :(.`;
 		divError.innerHTML = text;
 	}
 }
@@ -88,7 +88,7 @@ async function getOnePokemon(pokemon) {
 		const pokemon = await res.json();
 		createCard(pokemon);
 	} else {
-		text = `an error occurred!`;
+		text = `um erro ocorreu. insira o nome correto dessa vez.`;
 		divError.innerHTML = text;
 	}
 }
@@ -113,7 +113,7 @@ searchButton.addEventListener("click", async (event) => {
 		const poke = searchInput.value.toLowerCase();
 		if (searchInput.value == "") {
 			div.innerHTML = "";
-			divError.innerHTML = `insert something!`;
+			divError.innerHTML = `pesquise por um pokémon, amigo.`;
 		} else {
 			getOnePokemon(poke);
 		}
