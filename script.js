@@ -1,6 +1,6 @@
 const div = document.getElementById("root");
-const title = document.createElement("h3");
-title.textContent = `Welcome to the virtual Pokedex!`;
+const title = document.createElement("h1");
+title.textContent = `WELCOME TO THE VIRTUAL POKEDEX!`;
 
 /* HTML FORM */
 

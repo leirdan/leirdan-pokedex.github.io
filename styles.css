@@ -1,15 +1,22 @@
 :root {
-    --primary-color: #d3fcf4;
+    --primary-color: #6B92DB;
+    --left-color: #5D3891;
+    --right-color: #F99417;
+    --btn-color: #674188;
+    --border-color: #f1c40f;
     --font-primary: monospace;
-    --secondary-color: #D44AA8;
+    --font-secondary: Arial;
 }
 
 body {
-    background-color: var(--primary-color);
+    background: linear-gradient(to right, var(--left-color)
+    , var(--right-color));
+    font-family: var(--font-primary);
 }
 
-h3 {
+h1 {
     text-align: center;
+    color:white;
     font-family: var(--font-primary);
 }
 
@@ -33,10 +40,30 @@ h3 {
     color: white;
 }
 
+button {
+    margin: 20px;
+    padding: 1.2em 2.8em;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    background-color: transparent;
+    border: 1px solid;
+    border-radius: 0.6em;
+    cursor: pointer;
+}
+
 .search-button {
-    background-color:var(--secondary-color);
     margin-top: 10px;
-    border-radius: 5px;
-    border-style:solid;
-    font-weight: bold;
+    border-color: var(--border-color);
+    background-image: -webkit-linear-gradient(45deg, var(--right-color) 40%, transparent 40%);
+    background-image: linear-gradient(45deg, var(--right-color) 40%, transparent 40%);
+    background-position: 100%;
+    background-size: 400%;
+    text-transform: uppercase;
+    -webkit-transition: background 300ms ease-in-out;
+    transition: background 300ms ease-in-out;
+}
+
+.search-button:hover {
+    background-position: 0;
 }
