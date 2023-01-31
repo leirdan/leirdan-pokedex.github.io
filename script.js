@@ -21,7 +21,6 @@ form.appendChild(button);
 
 div.appendChild(form);
 
-const divResult = document.getElementById("result");
 const divError = document.getElementById("error");
 
 const message = document.createElement("h4");
@@ -43,60 +42,42 @@ let pokemonName, pokemonResult;
 
 /******** FUNCTIONS *********/
 
+// 1. the function below calls the API, gets all the pokemons, make them a json object and, for every pokemon in the list, execute the 'requestPokemon' function
 async function fetchAllPokemon() {
 	fetch(endpoint)
 		.then((pokemons) => {
 			return pokemons.json();
 		})
 		.then((allPokemons) => {
-			allPokemons.results.forEach((element) => {
-				requestPokemon(element);
+			allPokemons.results.forEach((pokemon) => {
+				requestPokemon(pokemon);
 			});
 		});
 }
 
-fetchAllPokemon();
-
-// 1. the function below is the one that make the request in pokeApi and return an error or the pokemon data!
+// 2. the function below is the one that make the request in pokeApi and return an error or the pokemon data!
 async function requestPokemon(pokemon) {
-	const requestResult = await fetch(pokemon.url);
-	if (requestResult.status === 200) {
-		const data = await requestResult.json();
-		pokemonResult = data;
-		console.log(pokemonResult);
-		return pokemonResult;
+	const url = pokemon.url;
+	const res = await fetch(url);
+	if (res.status === 200) {
+		const data = await res.json();
+		createCard(data);
 	} else {
-		text = document.createTextNode(`insert a pokemon that exists!`);
-		message.appendChild(text);
-		divError.appendChild(message);
+		divError.innerHTML = `an error occurred!`;
 	}
 }
 
-// 2. the function below create the html which contains the pokemon's info that will be rendered.
+// 3. the function below create the html which contains the pokemon's info that will be rendered.
 async function createCard(pokemon) {
-	return `
-    <div> 
-    <h1 class="name"> Name: ${pokemon.name} </h1>
-    </div>
-    `;
+	const pokeName = `${pokemon.name}`;
+	const divResult = document.createElement("div");
+	divResult.classList.add("pokemon");
+	divResult.innerHTML = pokeName;
+	div.appendChild(divResult);
 }
 
-// 3. this is the function that calls the request API function and print the pokemon's data in the screen
-async function startApp(pokemon) {
-	await requestPokemon(endpoint, pokemon)
-		.then((pokemon) => {
-			divResult.innerHTML = createCard(pokemon);
-		})
-		.catch((err) => {
-			text = document.createTextNode(err);
-			message.appendChild(text);
-			divError.appendChild(message);
-		});
-}
-
-// 4. the event that is activated by a click in the submit button. gets the value in search input and execute the startApp function with the value of 	parameter.
+// 4. the event that is activated by a click in the submit button. gets the value in search input and execute fetchAllPokemon function
 searchButton.addEventListener("click", async (event) => {
 	event.preventDefault();
-	pokemonName = searchInput.value.toLowerCase();
-	startApp(pokemonName);
+	fetchAllPokemon();
 });
