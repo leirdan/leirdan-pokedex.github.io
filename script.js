@@ -1,9 +1,11 @@
 const div = document.getElementById("root");
 const title = document.createElement("h3");
 title.textContent = `Welcome to the virtual Pokedex!`;
-div.appendChild(title);
 
 /* HTML FORM */
+
+const divForm = document.getElementById("form");
+divForm.appendChild(title);
 
 const form = document.createElement("form");
 form.className = "search-form";
@@ -19,7 +21,7 @@ button.className = "search-button";
 form.appendChild(input);
 form.appendChild(button);
 
-div.appendChild(form);
+divForm.appendChild(form);
 
 const divError = document.getElementById("error");
 
@@ -29,6 +31,7 @@ let text;
 /* COMMUNICATION WITH POKEAPI */
 
 const endpoint = `https://pokeapi.co/api/v2/pokemon?limit=151`;
+const baseUrl = `https://pokeapi.co/api/v2/pokemon/`;
 
 const getElementForm = (element) => {
 	return document.querySelector(element);
@@ -60,10 +63,26 @@ async function requestPokemon(pokemon) {
 	const url = pokemon.url;
 	const res = await fetch(url);
 	if (res.status === 200) {
-		const data = await res.json();
-		createCard(data);
+		const pokemon = await res.json();
+		createCard(pokemon);
 	} else {
-		divError.innerHTML = `an error occurred!`;
+		text = `an error occurred!`;
+		divError.innerHTML = text;
+	}
+}
+
+// 2.1. this function is used to get only 1 pokemon
+async function getOnePokemon(pokemon) {
+	div.innerHTML = "";
+	divError.innerHTML = "";
+	const url = `${baseUrl}${pokemon}`;
+	const res = await fetch(url);
+	if (res.status === 200) {
+		const pokemon = await res.json();
+		createCard(pokemon);
+	} else {
+		text = `an error occurred!`;
+		divError.innerHTML = text;
 	}
 }
 
@@ -76,8 +95,21 @@ async function createCard(pokemon) {
 	div.appendChild(divResult);
 }
 
-// 4. the event that is activated by a click in the submit button. gets the value in search input and execute fetchAllPokemon function
+// 4. as soon as the page is loaded, the request will be made and functions will be executed!
+window.onload = fetchAllPokemon();
+
+// 5. the event that is activated by a click in the submit button. gets the value in search input and returns only 1 pokemon
 searchButton.addEventListener("click", async (event) => {
 	event.preventDefault();
-	fetchAllPokemon();
+	try {
+		const poke = searchInput.value.toLowerCase();
+		if (searchInput.value == "") {
+			div.innerHTML = "";
+			divError.innerHTML = `insert something!`;
+		} else {
+			getOnePokemon(poke);
+		}
+	} catch (err) {
+		divError.innerHTML = err;
+	}
 });
