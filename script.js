@@ -17,6 +17,7 @@ label.className = "search-label";
 const input = document.createElement("input");
 input.type = "text";
 input.className = "search-input";
+input.placeholder = "ex.: wartortle.";
 
 const button = document.createElement("button");
 button.textContent = `Search your pokemon!`;
@@ -29,6 +30,7 @@ form.appendChild(button);
 divForm.appendChild(form);
 
 const divError = document.getElementById("error");
+divError.className = "error-div";
 
 const message = document.createElement("h4");
 let text;

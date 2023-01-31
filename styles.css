@@ -6,6 +6,7 @@
     --border-color: #f1c40f;
     --font-primary: monospace;
     --font-secondary: Arial;
+    --border-input: #9b9b9b;
 }
 
 body {
@@ -40,9 +41,18 @@ h1 {
 }
 
 .search-input {
-    border-radius: 5px;
-    background-color: black;
+    background-color: var(--left-color);
     color: white;
+    border: 0;
+    border-bottom: 2px solid var(--border-input);
+    background: transparent;
+    outline: 0;
+    padding: 10px;
+    width: 20%;
+}
+
+.search-input::placeholder{
+    color: whitesmoke;
 }
 
 button {
@@ -73,6 +83,6 @@ button {
     background-position: 0;
 }
 
-.result-div {
+.result-div, .error-div {
     text-align: center;
 }
