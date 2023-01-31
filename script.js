@@ -95,11 +95,22 @@ async function getOnePokemon(pokemon) {
 
 // 3. the function below create the html which contains the pokemon's info that will be rendered.
 async function createCard(pokemon) {
-	const pokeName = `${pokemon.name}`;
 	const divResult = document.createElement("div");
+	const { id, name, sprites, types } = pokemon;
+	const type = types[0].type.name;
+	const card = `
+	<div class="img-div"> 
+		<img src="${sprites.front_default}" alt="${name}" />
+	</div>
+	<div class="body-div">
+		<p> ${id} </p>
+		<h3> ${name} </h3>
+		<small> Type: ${type} </small>
+	</div>
+	`;
 	divResult.className = "result-div";
 	divResult.classList.add("pokemon");
-	divResult.innerHTML = pokeName;
+	divResult.innerHTML = card;
 	div.appendChild(divResult);
 }
 
