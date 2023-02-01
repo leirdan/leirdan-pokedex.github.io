@@ -104,14 +104,18 @@ async function createCard(pokemon) {
 	const { id, name, sprites, types } = pokemon;
 	const type = types[0].type.name;
 	const card = `
-	<div class="img-div"> 
-		<img src="${sprites.front_default}" alt="${name}" />
+	<div class="card-div"> 
+		<div class="img-div"> 
+			<img src="${sprites.front_default}" alt="${name}" />
+		</div>
+		<hr>
+		<div class="body-div">
+			<span class="span"> ${id} </span>
+			<h3 class="title"> ${name[0].toUpperCase() + name.substring(1)} </h3>
+			<small class="type"> Type: ${type} </small>
+		</div>
 	</div>
-	<div class="body-div">
-		<p> ${id} </p>
-		<h3> ${name} </h3>
-		<small> Type: ${type} </small>
-	</div>
+
 	`;
 	divResult.className = "result-div";
 	divResult.classList.add("pokemon");
