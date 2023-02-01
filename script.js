@@ -1,3 +1,5 @@
+// TODO: FAZER UM BOTÃO DE "MAIS DETALHES" PRA VISUALIZAR TODOS OS DADOS DO POKEMON EM UMA ABA SEPARADA?
+
 const div = document.getElementById("root");
 const title = document.createElement("h1");
 title.textContent = `BEM VINDO À POKEDEX VIRTUAL!`;
@@ -101,18 +103,33 @@ async function getOnePokemon(pokemon) {
 // 3. the function below create the html which contains the pokemon's info that will be rendered.
 async function createCard(pokemon) {
 	const divResult = document.createElement("div");
-	const { id, name, sprites, types } = pokemon;
+	const { id, name, sprites, types, abilities } = pokemon;
 	const type = types[0].type.name;
+	const ability = abilities[0].ability.url;
+	let abilityName, abilityDescription;
+	await fetch(ability)
+		.then((res) => {
+			return res.json();
+		})
+		.then((data) => {
+			abilityName = data.name;
+			if (pokemon.id == 1 || pokemon.id == 2 || pokemon.id == 3) {
+				// this if-else is necessary because the first 3 pokemons have effect_entries[1] written in german, so i need to change the slot to [0] to get the text in english!
+				abilityDescription = data.effect_entries[0].short_effect;
+			} else {
+				abilityDescription = data.effect_entries[1].short_effect;
+			}
+			console.log(data);
+		});
 	const card = `
 	<div class="card-div"> 
 		<div class="img-div"> 
 			<img src="${sprites.front_default}" alt="${name}" />
 		</div>
-		<hr>
 		<div class="body-div">
 			<span class="span"> ${id} </span>
 			<h3 class="title"> ${name[0].toUpperCase() + name.substring(1)} </h3>
-			<small class="type"> Type: ${type} </small>
+			<button class="details-button"> Ver detalhes </button>
 		</div>
 	</div>
 
@@ -143,6 +160,7 @@ searchButton.addEventListener("click", async (event) => {
 	}
 });
 
+// 6. this function is activated when the user presses the "return button", which returns him/her to the homepage with all the pokemons
 backButton.addEventListener("click", (event) => {
 	event.preventDefault();
 	div.innerHTML = "";
