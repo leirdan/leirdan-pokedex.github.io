@@ -134,6 +134,7 @@ searchButton.addEventListener("click", async (event) => {
 		if (searchInput.value == "") {
 			div.innerHTML = "";
 			divError.innerHTML = `pesquise por um pokémon, amigo.`;
+			form.appendChild(backButton);
 		} else {
 			getOnePokemon(poke);
 		}
