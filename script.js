@@ -1,5 +1,3 @@
-// TODO: FAZER UM BOTÃO DE "MAIS DETALHES" PRA VISUALIZAR TODOS OS DADOS DO POKEMON EM UMA ABA SEPARADA?
-
 const div = document.getElementById("root");
 const title = document.createElement("h1");
 title.textContent = `BEM VINDO À POKEDEX VIRTUAL!`;
@@ -50,8 +48,8 @@ const getElementForm = (element) => {
 const searchInput = getElementForm(".search-input");
 const searchButton = getElementForm(".search-button");
 const backButton = document.createElement("button");
-backButton.textContent = `Voltar ao início`;
 backButton.className = "back-button";
+backButton.textContent = `Voltar ao início`;
 
 let pokemonName, pokemonResult;
 
@@ -76,6 +74,9 @@ async function requestPokemon(pokemon) {
 	const res = await fetch(url);
 	if (res.status === 200) {
 		const pokemon = await res.json();
+		form.appendChild(label);
+		form.appendChild(input);
+		form.appendChild(button);
 		createCard(pokemon);
 	} else {
 		text = `um erro ocorreu :(.`;
@@ -92,6 +93,8 @@ async function getOnePokemon(pokemon) {
 	if (res.status === 200) {
 		const pokemon = await res.json();
 		form.removeChild(button);
+		form.removeChild(input);
+		form.removeChild(label);
 		form.appendChild(backButton);
 		createCard(pokemon);
 	} else {
@@ -102,8 +105,39 @@ async function getOnePokemon(pokemon) {
 
 // 3. the function below create the html which contains the pokemon's info that will be rendered.
 async function createCard(pokemon) {
-	const divResult = document.createElement("div");
-	const { id, name, sprites, types, abilities } = pokemon;
+	const divResult = document.createElement("div"); // get and list all pokemons
+	const { id, name, sprites, types } = pokemon;
+	const type = types[0].type.name;
+	const card = `
+	<div class="card-div"> 
+	<div class="img-div"> 
+	<img src="${sprites.front_default}" alt="${name}" title=${name.toUpperCase()} />
+	</div>
+	<div class="body-div">
+	<span class="span" id="id-pokemon"> ${id} </span>
+	<h3 class="title"> ${name[0].toUpperCase() + name.substring(1)} </h3>
+	<button class="details-button" onclick="cardDetailsPokemon(${id})"> Ver detalhes </button>
+	</div>
+	</div>
+	`;
+
+	divResult.className = "result-div";
+	divResult.classList.add("pokemon");
+	divResult.innerHTML = card;
+
+	div.appendChild(divResult);
+}
+
+async function cardDetailsPokemon(id) {
+	fetch(baseUrl + id)
+		.then((res) => {
+			return res.json();
+		})
+		.then((data) => {
+			pokemon = data;
+		});
+
+	const { name, sprites, types, abilities } = pokemon;
 	const type = types[0].type.name;
 	const ability = abilities[0].ability.url;
 	let abilityName, abilityDescription;
@@ -121,23 +155,11 @@ async function createCard(pokemon) {
 			}
 			console.log(data);
 		});
-	const card = `
-	<div class="card-div"> 
-		<div class="img-div"> 
-			<img src="${sprites.front_default}" alt="${name}" />
-		</div>
-		<div class="body-div">
-			<span class="span"> ${id} </span>
-			<h3 class="title"> ${name[0].toUpperCase() + name.substring(1)} </h3>
-			<button class="details-button"> Ver detalhes </button>
-		</div>
-	</div>
-
-	`;
-	divResult.className = "result-div";
-	divResult.classList.add("pokemon");
-	divResult.innerHTML = card;
-	div.appendChild(divResult);
+	const divResult = document.getElementsByClassName("result-div");
+	const divSelect = document.createElement("div");
+	divResult.innerHTML = "";
+	divSelect.innerHTML = "text";
+	div.appendChild(divSelect);
 }
 
 // 4. as soon as the page is loaded, the request will be made and functions will be executed!
@@ -150,6 +172,7 @@ searchButton.addEventListener("click", async (event) => {
 		const poke = searchInput.value.toLowerCase();
 		if (searchInput.value == "") {
 			div.innerHTML = "";
+			form.removeChild(label);
 			divError.innerHTML = `pesquise por um pokémon, amigo.`;
 			form.appendChild(backButton);
 		} else {
@@ -161,7 +184,7 @@ searchButton.addEventListener("click", async (event) => {
 });
 
 // 6. this function is activated when the user presses the "return button", which returns him/her to the homepage with all the pokemons
-backButton.addEventListener("click", (event) => {
+backButton.addEventListener("click", async (event) => {
 	event.preventDefault();
 	div.innerHTML = "";
 	searchInput.value = "";
