@@ -1,3 +1,5 @@
+const container = document.getElementById("container");
+
 const div = document.getElementById("root");
 const title = document.createElement("h1");
 title.textContent = `BEM VINDO À POKEDEX VIRTUAL!`;
@@ -106,8 +108,7 @@ async function getOnePokemon(pokemon) {
 // 3. the function below create the html which contains the pokemon's info that will be rendered.
 async function createCard(pokemon) {
 	const divResult = document.createElement("div"); // get and list all pokemons
-	const { id, name, sprites, types } = pokemon;
-	const type = types[0].type.name;
+	const { id, name, sprites } = pokemon;
 	const card = `
 	<div class="card-div"> 
 	<div class="img-div"> 
@@ -123,6 +124,7 @@ async function createCard(pokemon) {
 
 	divResult.className = "result-div";
 	divResult.classList.add("pokemon");
+	divResult.id = "result-div";
 	divResult.innerHTML = card;
 
 	div.appendChild(divResult);
@@ -137,29 +139,53 @@ async function cardDetailsPokemon(id) {
 			pokemon = data;
 		});
 
-	const { name, sprites, types, abilities } = pokemon;
+	// TODO: get more data from the API, like characteristics, moves, natures, habitats and more.
+	const { name, sprites, types, abilities, base_experience } = pokemon;
 	const type = types[0].type.name;
-	const ability = abilities[0].ability.url;
-	let abilityName, abilityDescription;
-	await fetch(ability)
+	let mainAbility = abilities[0].ability.url;
+	console.log(mainAbility);
+	let mainAbilityName, mainAbilityDescription;
+	await fetch(mainAbility)
 		.then((res) => {
 			return res.json();
 		})
 		.then((data) => {
-			abilityName = data.name;
+			mainAbilityName = data.name;
 			if (pokemon.id == 1 || pokemon.id == 2 || pokemon.id == 3) {
 				// this if-else is necessary because the first 3 pokemons have effect_entries[1] written in german, so i need to change the slot to [0] to get the text in english!
-				abilityDescription = data.effect_entries[0].short_effect;
+				mainAbilityDescription = data.effect_entries[0].effect;
 			} else {
-				abilityDescription = data.effect_entries[1].short_effect;
+				mainAbilityDescription = data.effect_entries[1].effect;
 			}
 			console.log(data);
 		});
-	const divResult = document.getElementsByClassName("result-div");
+
+	// só montar o cardzinho agora
+	const card = `
+	<div class="container-details"> 
+	<div class="card-details">
+		<div class="header-details"> 
+		<h2> Nome: ${name.toUpperCase()} </h2>
+		<h3> Tipo: ${type} </h3>
+		<h4> Habilidade: <em> ${mainAbilityName} </em> - ${mainAbilityDescription} </h4>
+		<p> Experiência ganha após derrotá-lo: ${base_experience} xp. </p>
+		</div>
+		<div class="img-details">
+		<img src=${sprites.front_default} title=${name}/> 
+		</div>
+	</div>
+	</div>
+	`;
+
+	const divResult = document.getElementById("result-div");
 	const divSelect = document.createElement("div");
-	divResult.innerHTML = "";
-	divSelect.innerHTML = "text";
-	div.appendChild(divSelect);
+	div.innerHTML = "";
+	form.removeChild(input);
+	form.removeChild(label);
+	form.removeChild(button);
+	form.appendChild(backButton);
+	container.appendChild(divSelect);
+	divSelect.innerHTML = card;
 }
 
 // 4. as soon as the page is loaded, the request will be made and functions will be executed!

@@ -11,9 +11,11 @@
     --font-secondary: Arial;
     --border-input: #9b9b9b;
     --placeholder-color: #d9d9d9;
+    --surface-color: #fff;
+    --curve: 40;
     --card-color: #eee;
     --span-color: rgb(190, 167, 167);
-    --img-background: rgb(255, 255, 255);
+    --img-background: #fff;
 }
 
 body {
@@ -21,6 +23,7 @@ body {
     , var(--right-color));
     font-family: var(--font-primary);
     color: white;
+    font-size: 10px;
 }
 
 h1 {
@@ -107,58 +110,48 @@ button {
     background-position: 0;
 }
 
-.details-button {
-    margin-top: 10px;
-    border-color: var(--details-border-color);
-    background-image: -webkit-linear-gradient(45deg, white 40%, transparent 40%);
-    background-image: linear-gradient(45deg, white 40%, transparent 40%);
-    background-position: 100%;
-    color: var(--details-text-color);
-    background-size: 400%;
-    text-transform: uppercase;
-    -webkit-transition: background 300ms ease-in-out;
-    transition: background 300ms ease-in-out;
-}
-
-.details-button:hover {
-    background-position: 0;
-    color: black;
-}
 
 .result-div, .error-div {
     text-align: center;
 }
 
 .result-div {
-    display: inline-flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content:space-evenly;
-    align-items:flex-end;
-    margin-top: 0.6rem;
-    margin-bottom: 1.2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 0 2rem 4rem;
+    padding: 0;
+    list-style-type: none;
 }
 
 .card-div {
-    gap: 10px;
-    justify-content: space-around;
-    border-radius: 20px;
-    margin: 10px;
-    padding: 20px;
+    position:relative;
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+    height: 100%;
+    border-radius: calc(var(--curve) * 1px);
     background-color: var(--card-color);
     box-shadow: 0px 3px 15px rgba(100, 100, 100, 0.5);
 }
 
-.img-div {
-    background: var(--img-background);  
-    width: 9rem;
-    margin-left: 2rem;
+.img-div img {
+    background: var(--img-background); 
+    margin-top: 2rem; 
+    width: 30%;
     border-radius: 50%;
-    padding: 20px;
 }
 
 .body-div {
     margin-top: 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+    padding: 2em;
+    border-radius: calc(var(--curve) * 1px) 0 0 0;    
+    background-color: var(--surface-color);
 }
 
 .body-div .span{
@@ -169,11 +162,58 @@ button {
 
 .body-div .title {
     color: black;
-    font-size: 25px;
+    font-size: 2em;
     font-weight: 600;
-    margin-bottom: 3px;
+    margin: 0 0 .3em;
 }
 
 .body-div .type {
     color: black;
+}
+
+.body-div .details-button {
+    margin-top: 10px;
+    border-color: var(--details-border-color);
+    background-image: -webkit-linear-gradient(45deg, var(--span-color) 40%, transparent 40%);
+    background-image: linear-gradient(45deg, var(--span-color) 40%, transparent 40%);
+    background-position: 100%;
+    color: var(--details-text-color);
+    background-size: 400%;
+    text-transform: uppercase;
+    -webkit-transition: background 300ms ease-in-out;
+    transition: background 300ms ease-in-out;
+}
+
+.body-div .details-button:hover {
+    background-position: 0;
+    color: black;
+}
+
+.container-details {
+    box-shadow: 0 15px 30px 1px grey;
+    color:black;
+	background: var(--card-color);
+	text-align: center;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 5em auto;
+	height: 30em;
+	width: 60em;
+}
+
+.card-details {
+    position: relative;
+	text-align: left;
+	overflow: hidden;
+	padding: 30px;
+	height: 100%;
+	float: left;
+	width: 40%;
+}
+
+.card-details h2 {
+    display: inline-flex;
+    text-align: center;
+    position: relative;
+    font-size: 20px;
 }
