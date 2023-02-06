@@ -61,7 +61,7 @@ let pokemonName, pokemonResult;
 async function fetchAllPokemon() {
 	const divSelect = document.getElementsByClassName("select-div");
 	divSelect.innerHTML = "";
-	fetch(endpoint)
+	await fetch(endpoint)
 		.then((pokemons) => {
 			return pokemons.json();
 		})
@@ -133,7 +133,7 @@ async function createCard(pokemon) {
 }
 
 async function cardDetailsPokemon(id) {
-	fetch(baseUrl + id)
+	await fetch(baseUrl + id)
 		.then((res) => {
 			return res.json();
 		})
@@ -160,7 +160,6 @@ async function cardDetailsPokemon(id) {
 			}
 		});
 
-	// só montar o cardzinho agora
 	const card = `
 	<div class="container-details"> 
 	<div class="card-details">
@@ -177,16 +176,16 @@ async function cardDetailsPokemon(id) {
 	</div>
 	`;
 
-	const divResult = document.getElementById("result-div");
-	const divSelect = document.createElement("div");
+	const divSelect = document.createElement("div"); // get one pokemon's info and list
 	divSelect.className = "select-div";
+	divSelect.id = "select-div";
 	div.innerHTML = "";
 	form.removeChild(input);
 	form.removeChild(label);
 	form.removeChild(button);
 	form.appendChild(backButton);
-	container.appendChild(divSelect);
 	divSelect.innerHTML = card;
+	container.appendChild(divSelect);
 }
 
 // 4. as soon as the page is loaded, the request will be made and functions will be executed!
@@ -213,9 +212,17 @@ searchButton.addEventListener("click", async (event) => {
 // 6. this function is activated when the user presses the "return button", which returns him/her to the homepage with all the pokemons
 backButton.addEventListener("click", async (event) => {
 	event.preventDefault();
+
 	div.innerHTML = "";
 	searchInput.value = "";
 	form.removeChild(backButton);
 	form.appendChild(button);
+
+	// remove the pokemon card that's result of the "ver detalhes" button off the screen
+	const divSelect = document.getElementById("select-div");
+	const container = document.getElementById("container");
+	container.removeChild(divSelect);
+
+	// run the program again
 	fetchAllPokemon();
 });
