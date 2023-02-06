@@ -24,6 +24,7 @@ body {
     font-family: var(--font-primary);
     color: white;
     font-size: 10px;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -116,20 +117,24 @@ button {
 }
 
 .result-div {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
     gap: 2rem;
-    margin: 0 2rem 4rem;
+    margin: 0 1rem 2rem;
     padding: 0;
-    list-style-type: none;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1; 
 }
 
 .card-div {
-    position:relative;
     display: block;
     overflow: hidden;
     text-decoration: none;
     height: 100%;
+    width: 40em;
     border-radius: calc(var(--curve) * 1px);
     background-color: var(--card-color);
     box-shadow: 0px 3px 15px rgba(100, 100, 100, 0.5);
@@ -139,6 +144,7 @@ button {
     background: var(--img-background); 
     margin-top: 2rem; 
     width: 30%;
+    height: 30%;
     border-radius: 50%;
 }
 

@@ -59,6 +59,8 @@ let pokemonName, pokemonResult;
 
 // 1. the function below calls the API, gets all the pokemons, make them a json object and, for every pokemon in the list, execute the 'requestPokemon' function
 async function fetchAllPokemon() {
+	const divSelect = document.getElementsByClassName("select-div");
+	divSelect.innerHTML = "";
 	fetch(endpoint)
 		.then((pokemons) => {
 			return pokemons.json();
@@ -143,7 +145,6 @@ async function cardDetailsPokemon(id) {
 	const { name, sprites, types, abilities, base_experience } = pokemon;
 	const type = types[0].type.name;
 	let mainAbility = abilities[0].ability.url;
-	console.log(mainAbility);
 	let mainAbilityName, mainAbilityDescription;
 	await fetch(mainAbility)
 		.then((res) => {
@@ -157,7 +158,6 @@ async function cardDetailsPokemon(id) {
 			} else {
 				mainAbilityDescription = data.effect_entries[1].effect;
 			}
-			console.log(data);
 		});
 
 	// só montar o cardzinho agora
@@ -179,6 +179,7 @@ async function cardDetailsPokemon(id) {
 
 	const divResult = document.getElementById("result-div");
 	const divSelect = document.createElement("div");
+	divSelect.className = "select-div";
 	div.innerHTML = "";
 	form.removeChild(input);
 	form.removeChild(label);
