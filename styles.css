@@ -7,8 +7,8 @@
     --back-border-color:#5D3891;
     --details-border-color: #eee;
     --details-text-color: gray;
-    --font-primary: monospace;
-    --font-secondary: Arial;
+    --font-primary: sans-serif, Arial;
+    --font-secondary: monospace;
     --border-input: #9b9b9b;
     --placeholder-color: #d9d9d9;
     --surface-color: #fff;
@@ -16,6 +16,7 @@
     --card-color: #eee;
     --span-color: rgb(190, 167, 167);
     --img-background: #fff;
+    --type-grass-color: #1e8a00;
 }
 
 body {
@@ -195,31 +196,68 @@ button {
     color: black;
 }
 
-.container-details {
+.card-details {
+    display: inline-block;
     box-shadow: 0 15px 30px 1px grey;
     color:black;
-	background: var(--card-color);
-	text-align: center;
-	border-radius: 5px;
+	background: white;
 	overflow: hidden;
-	margin: 5em auto;
-	height: 30em;
-	width: 60em;
+	height: 30rem;
+    width: 300px;
+    padding: 1em;
+    border-radius: 15px;  
+    margin: 10px;
+    text-align: left;
 }
 
-.card-details {
+.header-details {
+    padding: 1em;
     position: relative;
-	text-align: left;
-	overflow: hidden;
-	padding: 30px;
-	height: 100%;
-	float: left;
-	width: 40%;
+    border-radius: 0 0 3px 3px;
 }
 
-.card-details h2 {
-    display: inline-flex;
+.header-details h2 {
     text-align: center;
     position: relative;
-    font-size: 20px;
+    font-size: 1.5em;    
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 1em;
+    border-radius: 0 0 3px 3px;
+}
+
+.header-details .type-details {
+    font-family: var(--font-secondary);
+    position: absolute;
+    background: var(--type-grass-color);
+    right: 1em;
+    top: 0;
+    transform: translateY(-50%);
+    letter-spacing: 0.1em;
+    padding: 0.25em;
+    line-height: 1;
+    border-radius: 2px;
+}
+
+.card-details .img-details {
+    text-align: center;
+    padding: 1em 1em 0;
+    border-radius: 3px 3px 0 0;
+}
+
+.abilities-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ability {
+    margin-top: 1em;
+    flex: 1 0;
+    font-style: normal;
+}
+
+.label-details {
+    font-weight: lighter;
+    display: block;
+    margin-bottom: 3px;
 }

@@ -161,17 +161,30 @@ async function cardDetailsPokemon(id) {
 		});
 
 	const card = `
-	<div class="container-details"> 
-	<div class="card-details">
+	<div class="card-details"> 
+		
 		<div class="header-details"> 
-		<h2> Nome: ${name.toUpperCase()} </h2>
-		<h3> Tipo: ${type} </h3>
-		<h4> Habilidade: <em> ${mainAbilityName} </em> - ${mainAbilityDescription} </h4>
-		<p> Experiência ganha após derrotá-lo: ${base_experience} xp. </p>
+			<h2> ${name.toUpperCase()} </h2>
+			<div class="img-details">
+			<img src=${sprites.front_default} title=${name.toUpperCase()} /> 
+			</div>
+			<h3 class="type-details"> ${type} </h3>
+			<h4> Libera <strong> ${base_experience} </strong> xp quando derrotado. </h4>
+			<div class="abilities-details">
+				<h4 class="ability"> 
+					<span class="label-details">
+						HABILIDADE 
+					</span> 
+					${mainAbilityName[0].toUpperCase() + mainAbilityName.substring(1)} 
+					<details>
+					${mainAbilityDescription}
+					</details>
+				</h4>
+
+			</div>
+			
 		</div>
-		<div class="img-details">
-		<img src=${sprites.front_default} title=${name}/> 
-		</div>
+
 	</div>
 	</div>
 	`;
