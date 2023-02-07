@@ -16,7 +16,19 @@
     --card-color: #eee;
     --span-color: rgb(190, 167, 167);
     --img-background: #fff;
-    --type-grass-color: #1e8a00;
+    --type-grass-color: #6e7f0e;
+    --type-water-color: #1CB5E0;
+    --type-electric-color: #eff31a;
+    --type-normal-color: #C08A53;
+    --type-fairy-color: #ff8a95;
+    --type-fire-color: rgba(199,24,0,1);
+    --type-dark-color: #5c0249;
+    --type-poison-color: #6c1090;
+    --type-psychic-color: #ff2cc3;
+    --type-ice-color: #6fb8eb;
+    --type-ground-color: #6b4f3f ;
+    --type-dragon-color: #c47526;
+    --type-rock-color: #636363 ;
 }
 
 body {
@@ -229,7 +241,6 @@ button {
 .header-details .type-details {
     font-family: var(--font-secondary);
     position: absolute;
-    background: var(--type-grass-color);
     right: 1em;
     top: 0;
     transform: translateY(-50%);
@@ -237,6 +248,58 @@ button {
     padding: 0.25em;
     line-height: 1;
     border-radius: 2px;
+}
+
+h3#grass {
+    background: var(--type-grass-color);
+}
+
+h3#water {
+    background: var(--type-water-color);
+}
+
+h3#fire {
+    background: var(--type-fire-color);
+}
+
+h3#dark {
+    background: var(--type-dark-color);
+}
+
+h3#poison {
+    background: var(--type-poison-color);
+}
+
+h3#ice {
+    background: var(--type-ice-color);
+}
+
+h3#fairy {
+    background: var(--type-fairy-color);
+}
+
+h3#normal {
+    background: var(--type-normal-color);
+}
+
+h3#psychic {
+    background: var(--type-psychic-color);
+}
+
+h3#electric {
+    background: var(--type-electric-color);
+}
+
+h3#dragon {
+    background: var(--type-dragon-color);
+}
+
+h3#ground {
+    background: var(--type-ground-color);
+}
+
+h3#rock {
+    background: var(--type-rock-color);
 }
 
 .card-details .img-details {

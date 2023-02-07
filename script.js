@@ -166,9 +166,9 @@ async function cardDetailsPokemon(id) {
 		<div class="header-details"> 
 			<h2> ${name.toUpperCase()} </h2>
 			<div class="img-details">
-			<img src=${sprites.front_default} title=${name.toUpperCase()} /> 
+				<img src=${sprites.front_default} title=${name.toUpperCase()} /> 
 			</div>
-			<h3 class="type-details"> ${type} </h3>
+			<h3 class="type-details" id="${type}"> ${type} </h3>
 			<h4> Libera <strong> ${base_experience} </strong> xp quando derrotado. </h4>
 			<div class="abilities-details">
 				<h4 class="ability"> 
@@ -180,12 +180,8 @@ async function cardDetailsPokemon(id) {
 					${mainAbilityDescription}
 					</details>
 				</h4>
-
 			</div>
-			
 		</div>
-
-	</div>
 	</div>
 	`;
 
