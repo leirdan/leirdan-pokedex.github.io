@@ -33,15 +33,11 @@ divForm.appendChild(form);
 
 const divError = document.getElementById("error");
 divError.className = "error-div";
+divError.id = "error-div";
 
+// use this to send messages to user
 const message = document.createElement("h4");
 let text;
-
-/* COMMUNICATION WITH POKEAPI */
-
-const endpoint = `https://pokeapi.co/api/v2/pokemon?limit=151`;
-const baseUrl = `https://pokeapi.co/api/v2/pokemon/`;
-
 const getElementForm = (element) => {
 	return document.querySelector(element);
 };
@@ -53,14 +49,24 @@ const backButton = document.createElement("button");
 backButton.className = "back-button";
 backButton.textContent = `Voltar ao início`;
 
+/* COMMUNICATION WITH POKEAPI */
+
+const endpoint = `https://pokeapi.co/api/v2/pokemon?limit=151`;
+const baseUrl = `https://pokeapi.co/api/v2/pokemon/`;
+
 let pokemonName, pokemonResult;
 
-/******** FUNCTIONS *********/
+/******** FUNCTIONS TO GET AND CREATE DATA *********/
 
 // 1. the function below calls the API, gets all the pokemons, make them a json object and, for every pokemon in the list, execute the 'requestPokemon' function
 async function fetchAllPokemon() {
+	// if there is anything printed before, delete it.
+	const divError = document.getElementById("error-div");
+	divError.innerHTML = "";
 	const divSelect = document.getElementsByClassName("select-div");
 	divSelect.innerHTML = "";
+
+	// fetch all the pokemons from the api, turn them into json objects and execute the requestPokemon function
 	await fetch(endpoint)
 		.then((pokemons) => {
 			return pokemons.json();
@@ -72,15 +78,15 @@ async function fetchAllPokemon() {
 		});
 }
 
-// 2. the function below is the one that make the request in pokeApi and return an error or the pokemon data!
+// 2. this function makes an amount of requests in pokeApi and generates an error or the pokemons data by calling createCard function!
 async function requestPokemon(pokemon) {
 	const url = pokemon.url;
 	const res = await fetch(url);
+	form.appendChild(label);
+	form.appendChild(input);
+	form.appendChild(button);
 	if (res.status === 200) {
 		const pokemon = await res.json();
-		form.appendChild(label);
-		form.appendChild(input);
-		form.appendChild(button);
 		createCard(pokemon);
 	} else {
 		text = `um erro ocorreu :(.`;
@@ -88,10 +94,41 @@ async function requestPokemon(pokemon) {
 	}
 }
 
-// 2.1. this function is used to get only 1 pokemon
+// 3. the function below create the html which contains the pokemon's info that will be rendered.
+async function createCard(pokemon) {
+	const { id, name, sprites } = pokemon;
+	const card = `
+	<div class="card-div"> 
+		<div class="img-div"> 
+			<img src="${sprites.front_default}" alt="${name}" title=${name.toUpperCase()} />
+		</div>
+		<div class="body-div">
+			<span class="span" id="id-pokemon"> ${id} </span>
+			<h3 class="title"> ${name[0].toUpperCase() + name.substring(1)} </h3>
+			<button class="details-button" onclick="cardDetailsPokemon(${id})"> Ver detalhes </button>
+		</div>
+	</div>
+	`;
+
+	// this div will render the card
+	const divResult = document.createElement("div");
+	divResult.className = "result-div";
+	divResult.classList.add("pokemon");
+	divResult.id = "result-div";
+	// insert card into div
+	divResult.innerHTML = card;
+
+	// insert div with a card into the main div
+	div.appendChild(divResult);
+}
+
+// 4. this function is used when the user wants to search for a unique pokemon
 async function getOnePokemon(pokemon) {
+	// deletes everything in the screen before (except the form)
 	div.innerHTML = "";
 	divError.innerHTML = "";
+
+	// the function parameter is the id of the pokemon, and it's used to compose the url
 	const url = `${baseUrl}${pokemon}`;
 	const res = await fetch(url);
 	if (res.status === 200) {
@@ -104,34 +141,11 @@ async function getOnePokemon(pokemon) {
 	} else {
 		text = `um erro ocorreu. insira o nome correto dessa vez.`;
 		divError.innerHTML = text;
+		form.appendChild(backButton);
 	}
 }
 
-// 3. the function below create the html which contains the pokemon's info that will be rendered.
-async function createCard(pokemon) {
-	const divResult = document.createElement("div"); // get and list all pokemons
-	const { id, name, sprites } = pokemon;
-	const card = `
-	<div class="card-div"> 
-	<div class="img-div"> 
-	<img src="${sprites.front_default}" alt="${name}" title=${name.toUpperCase()} />
-	</div>
-	<div class="body-div">
-	<span class="span" id="id-pokemon"> ${id} </span>
-	<h3 class="title"> ${name[0].toUpperCase() + name.substring(1)} </h3>
-	<button class="details-button" onclick="cardDetailsPokemon(${id})"> Ver detalhes </button>
-	</div>
-	</div>
-	`;
-
-	divResult.className = "result-div";
-	divResult.classList.add("pokemon");
-	divResult.id = "result-div";
-	divResult.innerHTML = card;
-
-	div.appendChild(divResult);
-}
-
+// 5. creates the card with the details that wasn't visible on the homepage
 async function cardDetailsPokemon(id) {
 	await fetch(baseUrl + id)
 		.then((res) => {
@@ -146,6 +160,7 @@ async function cardDetailsPokemon(id) {
 	const type = types[0].type.name;
 	let mainAbility = abilities[0].ability.url;
 	let mainAbilityName, mainAbilityDescription;
+
 	await fetch(mainAbility)
 		.then((res) => {
 			return res.json();
@@ -162,7 +177,6 @@ async function cardDetailsPokemon(id) {
 
 	const card = `
 	<div class="card-details"> 
-		
 		<div class="header-details"> 
 			<h2> ${name.toUpperCase()} </h2>
 			<div class="img-details">
@@ -185,9 +199,12 @@ async function cardDetailsPokemon(id) {
 	</div>
 	`;
 
-	const divSelect = document.createElement("div"); // get one pokemon's info and list
+	// this is the div that will store and render the card
+	const divSelect = document.createElement("div");
 	divSelect.className = "select-div";
 	divSelect.id = "select-div";
+
+	// reset the screen and show the divSelect on screen
 	div.innerHTML = "";
 	form.removeChild(input);
 	form.removeChild(label);
@@ -197,10 +214,12 @@ async function cardDetailsPokemon(id) {
 	container.appendChild(divSelect);
 }
 
-// 4. as soon as the page is loaded, the request will be made and functions will be executed!
+/********* FUNCTIONS TO LOAD DATA *********/
+
+// 6. as soon as the page is loaded, the request will be made and the functions cascade will be executed!
 window.onload = fetchAllPokemon();
 
-// 5. the event that is activated by a click in the submit button. gets the value in search input and returns only 1 pokemon
+// 7. the event that is activated by a click in the submit button. gets the value in search input and returns only 1 pokemon
 searchButton.addEventListener("click", async (event) => {
 	event.preventDefault();
 	try {
@@ -218,7 +237,7 @@ searchButton.addEventListener("click", async (event) => {
 	}
 });
 
-// 6. this function is activated when the user presses the "return button", which returns him/her to the homepage with all the pokemons
+// 8. this function is activated when the user presses the "return button", which returns him/her to the homepage with all the pokemons
 backButton.addEventListener("click", async (event) => {
 	event.preventDefault();
 
@@ -229,8 +248,10 @@ backButton.addEventListener("click", async (event) => {
 
 	// remove the pokemon card that's result of the "ver detalhes" button off the screen
 	const divSelect = document.getElementById("select-div");
-	const container = document.getElementById("container");
-	container.removeChild(divSelect);
+	if (divSelect) {
+		const container = document.getElementById("container");
+		container.removeChild(divSelect);
+	}
 
 	// run the program again
 	fetchAllPokemon();
