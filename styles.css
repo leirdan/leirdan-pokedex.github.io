@@ -29,6 +29,7 @@
     --type-ground-color: #6b4f3f ;
     --type-dragon-color: #c47526;
     --type-rock-color: #636363 ;
+    --type-bug-color: #69860c;
 }
 
 body {
@@ -300,6 +301,10 @@ h3#ground {
 
 h3#rock {
     background: var(--type-rock-color);
+}
+
+h3#bug{
+    background: var(--type-bug-color);
 }
 
 .card-details .img-details {
